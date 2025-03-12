@@ -1,0 +1,29 @@
+html{
+    font-size: 62.5%;
+}
+
+body{
+    font-size: 1.4rem;
+    font-family: "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
+
+th, td{
+    color: #000000
+}
+
+.header{
+    background-color: #0050ff;
+    width: 100%;
+    padding: 20px 20px 20px 20px;
+}
+
+.header h1, .header h1 a, .header h1 a:visited, .header h1 a:active {
+    color: #ffffff;
+    font-size: 36pt;
+    text-decoration: none;
+}
+
+.content{
+    margin-top: 20px;
+    margin-left: 40px;
+}

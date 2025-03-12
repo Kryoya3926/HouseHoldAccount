@@ -1,0 +1,40 @@
+{% load static %}
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'css/book.css' %}">
+    </head>
+
+    <body>
+        <div class="header">
+            <h1><a href="/">俺の家計簿！</a></h1>
+        </div>
+
+        <div class="content container">
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>日付</th>
+                            <th>カテゴリ</th>
+                            <th>金額</th>
+                            <th>メモ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for data in hhAccount %}
+                        <tr>
+                            <td>{{data.id}}</td>
+                            <td>{{data.date}}</td>
+                            <td>{{data.category}}</td>
+                            <td>{{data.money_amount}}</td>
+                            <td>{{data.memo|linebreaksbr}}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

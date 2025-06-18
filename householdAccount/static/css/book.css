@@ -11,19 +11,37 @@ th, td{
     color: #000000
 }
 
-.header{
+.navbar{
+    font-size:2.0rem;
     background-color: #0050ff;
-    width: 100%;
-    padding: 20px 20px 20px 20px;
+    color: #ffffff;
+    padding: 20px 20px 20px 40px
 }
 
-.header h1, .header h1 a, .header h1 a:visited, .header h1 a:active {
+.navbar .navbar-brand{
+    font-size: 3.0rem;
+    background-color: #0050ff;
     color: #ffffff;
-    font-size: 36pt;
-    text-decoration: none;
+}
+
+.navbar-light .navbar-nav .nav-link, .navbar-light .navbar-nav .nav-item{
+    background-color: #0050ff;
+    color: #ffffff;
+}
+
+.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-item:hover, .navbar-light .navbar-nav .nav-item:focus{
+    background-color: #0050ff;
+    color: #ffffff;
+}
+
+h1, h2, h3{
+    background-color: #ffffff;
+    color: #000000;
+    margin-top: 10px;
+    margin-left: 20px;
 }
 
 .content{
     margin-top: 20px;
-    margin-left: 40px;
+    margin-left: 10px;
 }

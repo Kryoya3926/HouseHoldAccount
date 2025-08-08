@@ -1,5 +1,5 @@
 from django.shortcuts import render, reverse
-from django.views.generic import View, DetailView, CreateView
+from django.views.generic import View, DetailView, CreateView, UpdateView
 from .models import AccountBook
 from .forms import BookForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -28,6 +28,14 @@ class BookCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author=self.request.user
         return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('book:book_list')
+
+class BookUpdateView(UpdateView):
+    model=AccountBook
+    form_class=BookForm
+    template_name='book/book_update.html'
 
     def get_success_url(self):
         return reverse('book:book_detail', args=(self.object.id,))

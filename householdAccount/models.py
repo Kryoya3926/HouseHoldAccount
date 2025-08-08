@@ -1,7 +1,3 @@
-from django.db import models
-
-# Create your models here.
-
 """
  Blogアプリ
  データモデル
@@ -11,6 +7,7 @@ from django.db import models
  Written by: Ryoya Kurihara
 
 """
+from django.db import models
 from django.conf import settings
 from django.utils import timezone
 

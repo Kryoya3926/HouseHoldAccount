@@ -1,0 +1,33 @@
+{% extends 'book/base.html' %}
+{% block content %}
+    <div class="content container">
+        <div class="table-responsive">
+            <table class="table">
+                <div class="accountbook">
+                    <tbody>
+                        <tr>
+                            <th>ID</th>
+                            <td>{{accountbook.id}}</td>
+                        </tr>
+                        <tr>
+                            <th>日付</th>
+                            <td>{{accountbook.date}}</td>
+                        </tr>
+                        <tr>
+                            <th>カテゴリ</th>
+                            <td>{{accountbook.category}}</td>
+                        </tr>
+                        <tr>
+                            <th>金額</th>
+                            <td>{{accountbook.money_amount}}</td>
+                        </tr>
+                        <tr>
+                            <th>メモ</th>
+                            <td>{{accountbook.memo|linebreaksbr}}</td>
+                        </tr>
+                    </tbody>
+                </div>
+            </table>
+        </div>
+    </div>
+{% endblock %}

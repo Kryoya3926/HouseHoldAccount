@@ -1,5 +1,6 @@
 {% extends 'book/base.html' %}
 {% load bootstrap4 %}
+{% load blog_extras %}
 
 {% block content %}
 <form method="post">
@@ -9,6 +10,7 @@
     {% bootstrap_field form.category placeholder='カテゴリ' %}
     {% bootstrap_field form.money_amount placeholder='金額' %}
     {% bootstrap_field form.memo placeholder='メモ' %}
-    <button type="submit" class="btn btn-primary btn-lg">変更</button>
+    <a href="{% get_return_link request %}" class="btn btn-primary btn-lg">戻る</a>
+    <button type="submit" class="btn btn-success btn-lg">変更</button>
 </form>
 {% endblock %}

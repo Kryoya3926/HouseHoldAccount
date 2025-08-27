@@ -1,5 +1,5 @@
 from django.shortcuts import render, reverse
-from django.views.generic import View, DetailView, CreateView, UpdateView
+from django.views.generic import View, DetailView, CreateView, UpdateView, DeleteView
 from .models import AccountBook
 from .forms import BookForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -39,3 +39,9 @@ class BookUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse('book:book_detail', args=(self.object.id,))
+
+class BookDeleteView(DeleteView):
+    model=AccountBook
+    template_name='book/book_delete.html'
+    def get_success_url(self):
+        return reverse('book:book_list')

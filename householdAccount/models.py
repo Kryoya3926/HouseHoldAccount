@@ -29,7 +29,7 @@ class AccountBook(models.Model):
 
     """
     date=models.DateField(default=timezone.now)
-    category=models.ForeignKey(Category,on_delete=models.CASCADE)
+    category=models.ForeignKey(Category, on_delete=models.CASCADE)
     money_amount=models.IntegerField()
     memo=models.CharField(max_length=200, blank=True)
 

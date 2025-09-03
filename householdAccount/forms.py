@@ -1,4 +1,5 @@
 from django.forms import ModelForm
+from django import forms
 from .models import AccountBook
 
 class BookForm(ModelForm):
@@ -11,3 +12,6 @@ class BookForm(ModelForm):
             'money_amount': '金額',
             'memo': 'メモ',
         }
+
+class BookSearchForm(forms.Form):
+    key_word=forms.CharField(label='検索キーワード', required=False)

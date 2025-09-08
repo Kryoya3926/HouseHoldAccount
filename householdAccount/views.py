@@ -8,6 +8,7 @@ from django.db.models import Q
 class BookListView(ListView):
     model=AccountBook
     template_name='book/book_list.html'
+    paginate_by=5
 
     def get_queryset(self):
         form=BookSearchForm(self.request.GET or None)

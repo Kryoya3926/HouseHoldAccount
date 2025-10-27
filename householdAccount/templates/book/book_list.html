@@ -19,7 +19,8 @@
                 </tr>
             </thead>
             <tbody>
-            {% for data in accountbook_list %} <!--コンテキストが指定されていないので、views.pyで用いたモデル名を小文字にし、_listを付けたものがデフォルト-->
+            <!--コンテキストが指定されていないので、views.pyで用いたモデル名を小文字にし、_listを付けたものがデフォルト-->
+            {% for data in accountbook_list %}
                 <tr data-href="{% url 'book:book_detail' pk=data.pk %}">
                     <td>{{data.id}}</td>
                     <td>{{data.date}}</td>
@@ -33,7 +34,8 @@
     </div>
 </div>
 <script src="/static/js/clicktable.js"></script>
-<a id="create_new" href="{% url 'book:book_add' %}" class="btn btn-primary btn-lg">新規作成</a>
+<a href="{% url 'book:import_csv' %}" class="btn btn-primary btn-lg">CSV登録</a><br>
+<a href="{% url 'book:book_add' %}" class="btn btn-primary btn-lg">新規作成</a>
 {% include 'book/page.html' %}
 {% else %}
 <h1>ようこそ「俺の家計簿！」へ。</h1>

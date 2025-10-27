@@ -15,3 +15,6 @@ class BookForm(ModelForm):
 
 class BookSearchForm(forms.Form):
     key_word=forms.CharField(label='検索キーワード', required=False)
+
+class CSVUpdateForm(forms.Form):
+    file=forms.FileField(label="CSVファイル", help_text="拡張子がCSVのファイルをアップロードしてください。")

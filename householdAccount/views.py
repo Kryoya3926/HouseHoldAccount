@@ -1,13 +1,18 @@
 from django.shortcuts import render, reverse
-from django.views.generic import View, DetailView, CreateView, UpdateView, DeleteView, ListView
-from .models import AccountBook
-from .forms import BookForm, BookSearchForm
+from django.views.generic import View, DetailView, CreateView, UpdateView, DeleteView, ListView, FormView
+from .models import AccountBook, Category
+from .forms import BookForm, BookSearchForm, CSVUpdateForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
+from django.urls import reverse_lazy
+import io
+import pandas as pd
+import numpy as np
 
 class BookListView(ListView):
     model=AccountBook
     template_name='book/book_list.html'
+    ordering=['-date']
     paginate_by=5
 
     def get_queryset(self):
@@ -60,3 +65,46 @@ class BookDeleteView(DeleteView):
     template_name='book/book_delete.html'
     def get_success_url(self):
         return reverse('book:book_list')
+
+class BookDataImport(LoginRequiredMixin, FormView):
+    template_name="book/import.html"
+    success_url=reverse_lazy("book:book_list")
+    form_class=CSVUpdateForm
+
+    def form_valid(self, form):
+        #データの読み込み
+        csvfile=io.TextIOWrapper(form.cleaned_data["file"], encoding="cp932")
+
+        df=pd.read_csv(csvfile,
+                       encoding="SHIFT-JIS", #文字コード
+                       usecols=[0,1,2,3,], #使用する列
+                       names=["date", "category", "money_amount", "memo"],) #カラム名
+
+        #datetimeに変換
+        df["date"]=pd.to_datetime(df["date"], format="%Y/%m/%d")
+
+        df=df.fillna("")
+        data_np=np.asarray(df)
+
+
+        for row in data_np:
+            data, created=Category.objects.get_or_create(categories=row[1])
+
+            if data.categories in ("給料","臨時収入"):
+                data.categoryType="収入"
+            else:
+                data.categoryType="出費"
+
+            data.save()
+
+            AccountBook.objects.create(date=row[0], category=data, money_amount=row[2], memo=row[3])
+            #bookdata=AccountBook()
+            #bookdata.category_id=data.id
+            #bookdata.date=row[0]
+            #bookdata.money_amount=row[2]
+            #bookdata.memo=row[3]
+
+            #bookdata.save()
+
+
+        return super().form_valid(form)

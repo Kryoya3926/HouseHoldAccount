@@ -51,6 +51,11 @@ h1, h2, h3{
     margin-left: 10px;
 }
 
-a{
+.space{
+    margin-bottom: 20px;
+}
+
+.chart-container{
+    display: flex;
     margin-bottom: 20px;
 }

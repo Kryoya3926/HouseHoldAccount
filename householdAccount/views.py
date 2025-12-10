@@ -8,6 +8,7 @@ from django.urls import reverse_lazy
 import io
 import pandas as pd
 import numpy as np
+import datetime
 
 class BookListView(ListView):
     model=AccountBook
@@ -111,6 +112,7 @@ class GraphView(View):
         """
             getメソッド呼び出し時にjavascriptを生成
         """
+        today=datetime.date.today()
 
         #指定されたcategoryTypeのCategoryモデルとAccountBookモデル
         accountbook_data=AccountBook.objects.select_related('category')
@@ -120,16 +122,17 @@ class GraphView(View):
         income={}
         outcome={}
         for data in accountbook_data:
-            if data.category.categoryType=="収入":
-                if not data.category.categories in income.keys():
-                    income[data.category.categories]=data.money_amount
+            if data.date.year==today.year and data.date.month==today.month:
+                if data.category.categoryType=="収入":
+                    if not data.category.categories in income.keys():
+                        income[data.category.categories]=data.money_amount
+                    else:
+                        income[data.category.categories]+=data.money_amount
                 else:
-                    income[data.category.categories]+=data.money_amount
-            else:
-                if not data.category.categories in outcome.keys():
-                    outcome[data.category.categories]=data.money_amount
-                else:
-                    outcome[data.category.categories]+=data.money_amount
+                    if not data.category.categories in outcome.keys():
+                        outcome[data.category.categories]=data.money_amount
+                    else:
+                        outcome[data.category.categories]+=data.money_amount
 
         context["categories_income"]=[data for data in income.keys()]
         context["money_amount_income"]=[data for data in income.values()]

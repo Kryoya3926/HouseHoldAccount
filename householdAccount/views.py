@@ -98,13 +98,42 @@ class BookDataImport(LoginRequiredMixin, FormView):
             data.save()
 
             AccountBook.objects.create(date=row[0], category=data, money_amount=row[2], memo=row[3])
-            #bookdata=AccountBook()
-            #bookdata.category_id=data.id
-            #bookdata.date=row[0]
-            #bookdata.money_amount=row[2]
-            #bookdata.memo=row[3]
-
-            #bookdata.save()
-
 
         return super().form_valid(form)
+
+class GraphView(View):
+    """
+        グラフ表示用のJavaScriptを生成するビュー
+    """
+    template_name="book/script.js"
+
+    def get(self, request, *args, **kwargs):
+        """
+            getメソッド呼び出し時にjavascriptを生成
+        """
+
+        #指定されたcategoryTypeのCategoryモデルとAccountBookモデル
+        accountbook_data=AccountBook.objects.select_related('category')
+
+        #データのプロット
+        context={}
+        income={}
+        outcome={}
+        for data in accountbook_data:
+            if data.category.categoryType=="収入":
+                if not data.category.categories in income.keys():
+                    income[data.category.categories]=data.money_amount
+                else:
+                    income[data.category.categories]+=data.money_amount
+            else:
+                if not data.category.categories in outcome.keys():
+                    outcome[data.category.categories]=data.money_amount
+                else:
+                    outcome[data.category.categories]+=data.money_amount
+
+        context["categories_income"]=[data for data in income.keys()]
+        context["money_amount_income"]=[data for data in income.values()]
+        context["categories_outcome"]=[data for data in outcome.keys()]
+        context["money_amount_outcome"]=[data for data in outcome.values()]
+
+        return render(request, self.template_name, context, content_type='text/javascript')
